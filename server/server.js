@@ -4,16 +4,22 @@ import { connectdb } from "./config/db.js";
 
 dotenv.config();
 
-const app=express();
+const app = express();
 
 connectdb();
 
-app.get("/",(req,res)=>{
-    res.send("Hello bby")
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("Hello bby");
 });
-const PORT=process.env.PORT ||8000;
-app.listen(PORT,()=>{
-    console.log(`server is running on ${PORT}`)
 
-})
+
+import authRoutes from "./routes/auth.routes.js";
+app.use("/api/auth", authRoutes);
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`server is running on ${PORT}`);
+});
