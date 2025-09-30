@@ -3,17 +3,21 @@ import express from "express";
 import { connectdb } from "./config/db.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 
 const app = express();
+
 
 connectdb();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 app.get("/", (req, res) => {
-  res.send("Hello bby");
+  res.send("Hello ");
 });
 
 
