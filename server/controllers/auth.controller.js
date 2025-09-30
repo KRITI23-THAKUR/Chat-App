@@ -1,24 +1,30 @@
-export const register=async(req,res)=>{
-    try {
-            const {fullname,email,password}=req.body;
-            console.log(fullname,email,password);
+import { asyncHandler } from "../middleware/catchAsynsErrors.js";
+import { ApiError } from "../middleware/errorHandler.js";
 
-        
-        
-        
-    } catch (error) {
-        console.log(error)
-        
-    }
-}
+export const register = asyncHandler(async (req, res) => {
+  const { fullname, email, password } = req.body;
 
-export const login=async(req,res)=>{
-    try {
-        const{email,password}=req.body;
-        console.log(email,password)
-    } catch (error) {
-        
-        
-    }
-}
+  if (!fullname || !email || !password) {
+    throw new ApiError(
+      400,
+      "fullname, email, password something is missing"
+    );
+  }
 
+  res.status(201).json({
+    success: true,
+    message: "User registered successfully",
+  });
+});
+
+export const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new ApiError(400, "Email and password are required");
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Login successful",
+  });
+});
