@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique:true
     },
 
     fullname: {
@@ -23,6 +24,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    profilePicture:{
+      type:String,
+      default:null
+    }
   },
   { timestamps: true }
 );

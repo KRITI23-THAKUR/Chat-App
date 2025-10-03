@@ -1,29 +1,27 @@
-import { Error } from "mongoose";
 import { asyncHandler } from "../middleware/catchAsynsErrors.js";
 import { ApiError } from "../middleware/errorHandler.js";
 import { User } from "../models/user.model.js";
 
+/*----------------------------
+@Register
+---------------------*/
 export const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password)
     throw new ApiError(400, "fullname, email, password something is missing");
-  }
 
   const user = await User.findOne({ email });
-  if (user) {
-    throw new ApiError(400, "user by this email already registered");
-  }
-  const newUser = await User.create({ name, email, password });
-  console.log(newUser);
+  if (user) throw new ApiError(400, "user by this email already registered");
 
-  if (!newUser) {
-    throw new ApiError(400, " error while creating new user");
-  }
+  const newUser = await User.create({ name, email, password });
+  if (!newUser) throw new ApiError(400, " error while creating new user");
+
   const token = await newUser.generateJwtToken();
   const registeredUser = await User.findById(newUser._id).select("-password");
 
   const expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
+
   return res.status(201).cookie("token", token, { expires: expiryDate }).json({
     success: true,
     user: registeredUser,
@@ -32,6 +30,9 @@ export const register = asyncHandler(async (req, res) => {
   });
 });
 
+/*----------------------------
+@login
+---------------------*/
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -57,15 +58,14 @@ export const login = asyncHandler(async (req, res) => {
   });
 });
 
+/*-----------------------------
+@logout
+-----------------------------*/
+
 export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("token", { httpOnly: true });
+
   return res.status(200).json({
     message: "logout successfully",
-  });
-});
-
-export const getCurrentUser = asyncHandler(async (req, res, next) => {
-  return res.status(200).json({
-    user: req.user,
   });
 });
