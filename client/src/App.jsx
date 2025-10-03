@@ -1,26 +1,25 @@
-import React from 'react'
-import Login from './auth/Login'
-import SignUp from './auth/SignUp'
-import Dashboard from './auth/Dashboard'
-import Home from './auth/Home'
-import Header from './components/Header'
-import { Route, Routes } from 'react-router-dom'
+import React from "react";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Dashboard from "./pages/Dashboard";
+import { Toaster, toast } from "sonner";
 
-
+import { Route, Routes } from "react-router-dom";
+import NonexistRoutes from "./components/routing/NonexistRoutes";
 
 const App = () => {
-  
-  
-  
   return (
-    <Routes>
-      <Route path="/dashboard" element={<Dashboard/>}/>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/signup" element={<SignUp/>}/>
+    <>
+    <Toaster/>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
 
-    </Routes>
-  )
-}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/*" element={<NonexistRoutes />} />
+      </Routes>
+    </>
+  );
+};
 
-export default App
+export default App;

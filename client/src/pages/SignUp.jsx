@@ -1,14 +1,14 @@
-import React from "react";
 import { useState } from "react";
-import Header from "../components/Header";
+import useApi from "../hooks/useApi";
 
 const FORMDATA = {
-    name: "",
+  name: "",
   email: "",
   password: "",
 };
 
 const SignUp = () => {
+  const { request, loading } = useApi();
   const [formdata, setFormdata] = useState(FORMDATA);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,28 +16,15 @@ const SignUp = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formdata),
-      });
-
-      const data = await response.json();
-
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setFormdata(FORMDATA);
-    }
+    await request({
+      endPoint: "/auth/register",
+      method: "POST",
+      body: formdata,
+    });
   };
 
   return (
     <>
-      <Header />
-
       <div className="flex items-center justify-center min-h-screen">
         <form
           className="flex flex-col space-y-4"
@@ -46,6 +33,7 @@ const SignUp = () => {
           }}
         >
           <input
+            className="input"
             value={formdata.name}
             name="name"
             type="text"
@@ -53,6 +41,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
           <input
+            className="input"
             value={formdata.email}
             name="email"
             type="email"
@@ -60,13 +49,14 @@ const SignUp = () => {
             onChange={handleChange}
           />
           <input
+            className="input"
             value={formdata.password}
             name="password"
             type="password"
             placeholder="Enter your password"
             onChange={handleChange}
           />
-          <button>SignUp</button>
+          <button className="btn">{loading?"SigningUp":"SignUp"}</button>
         </form>
       </div>
     </>

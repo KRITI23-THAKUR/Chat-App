@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js";
 
 /*----------------------------
 @Register
----------------------*/
+---------------------*/ 
 export const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -13,6 +13,9 @@ export const register = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
   if (user) throw new ApiError(400, "user by this email already registered");
+
+  const nameExist = await User.findOne({ name });
+  if (nameExist) throw new ApiError(400, "user by this name already registered");
 
   const newUser = await User.create({ name, email, password });
   if (!newUser) throw new ApiError(400, " error while creating new user");
