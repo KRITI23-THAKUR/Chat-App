@@ -1,3 +1,38 @@
-
 @import "tailwindcss";
 @plugin "daisyui";
+
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
+@keyframes border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+@theme {
+  --animate-border: border 4s linear infinite;
+}
+
+@layer utilities {
+  .border-gradient {
+    border: 4px solid transparent;
+    border-radius: 1rem; /* adjust as needed */
+    background: conic-gradient(
+        from var(--border-angle),
+        #ff0080,
+        #7928ca,
+        #2af598
+      )
+      border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+  }
+  .custom-input {
+    @apply input bg-transparent text-white border-teal-500 border-1 placeholder:text-white placeholder:text-xs rounded-lg py-2 ;
+  }
+}

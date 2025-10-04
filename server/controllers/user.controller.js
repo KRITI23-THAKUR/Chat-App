@@ -16,6 +16,7 @@ export const getAllUsers = asyncHandler(async (req, res, next) => {
 
 export const getCurrentUser = asyncHandler(async (req, res, next) => {
   return res.status(200).json({
+    success: true,
     user: req.user,
   });
 });
