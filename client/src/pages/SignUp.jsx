@@ -3,47 +3,47 @@ import useApi from "../hooks/useApi";
 import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
 import { AuthContext } from "../context/AuthContext";
 import { setToken } from "../lib/localstorage";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const { request, loading } = useApi();
   const [formdata, setFormdata] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormdata((prev) => ({ ...prev, [name]: value }));
   };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await request({
       endPoint: "/auth/register",
       method: "POST",
       body: formdata,
+      redirectUrl: "/",
     });
-    console.log(response)
+    console.log(response);
     setAuth({
-      token:response.token,
-      user:response.user
+      token: response.token,
+      user: response.user,
     });
-    setToken(response.token)
-    
-
+    setToken(response.token);
   };
+
   return (
     <>
-      <div className=" w-full  flex items-center justify-center p-4 bg-slate-900 min-h-screen">
-        <div className="relative w-full max-w-6xl md:h-[550px] h-[650px]  flex flex-col items-center justify-center">
+      <div className="w-full flex items-center justify-center p-4 bg-slate-900 min-h-screen">
+        <div className="relative w-full max-w-6xl md:h-[550px] h-[650px] flex flex-col items-center justify-center">
           <BorderAnimatedContainer>
-            <div className="flex  items-center w-full h-full">
+            <div className="flex items-center w-full h-full">
               <form
-                className="flex flex-col space-y-4 p-6 items-center justify-center h-full w-full "
-                onSubmit={(e) => {
-                  submitHandler(e);
-                }}
+                className="flex flex-col space-y-4 p-6 items-center justify-center h-full w-full"
+                onSubmit={submitHandler}
               >
                 <input
                   className="custom-input"
@@ -70,13 +70,19 @@ const SignUp = () => {
                   onChange={handleChange}
                 />
                 <button className="btn btn-accent border-1 text-teal-200 border-teal-800">
-                  {loading ? "SigningUp" : "SignUp"}
+                  {loading ? "SigningUp..." : "SignUp"}
                 </button>
+                <p className="text-center text-gray-600 mt-4">
+          Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="mt-2 text-teal-700 underline font-bold"
+                >
+                 Login
+                </Link>
+                </p>
               </form>
-              <div className="w-full text-center">
-                <h2>chaataa maardungi</h2>
-              </div>
-            </div>
+            </div> {/* ✅ added missing closing div here */}
           </BorderAnimatedContainer>
         </div>
       </div>

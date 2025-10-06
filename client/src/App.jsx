@@ -1,23 +1,32 @@
-import React from "react";
+
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
-import { Toaster, toast } from "sonner";
+import { Toaster} from "sonner";
 
 import { Route, Routes } from "react-router-dom";
 import NonexistRoutes from "./components/routing/NonexistRoutes";
-import ChatPage from "./pages/ChatPage";
+import Chat from "./pages/Chat";
+import ProtectedRoutes from "./components/routing/ProtectedRoutes";
+import PublicRoutes from "./components/routing/PublicRoutes";
+import ChatProviderWrapper from "./components/routing/ChatProviderWrapper";
+
 
 const App = () => {
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <Routes>
-        <Route path="/" element={<ChatPage/>} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/*" element={<NonexistRoutes />} />
+        <Route element={<ProtectedRoutes />}>
+        <Route element={<ChatProviderWrapper/>}>
+          <Route path="/" element={<Chat />} />
+          </Route>
+        </Route>
+        <Route element={<PublicRoutes />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/*" element={<NonexistRoutes />} />
+        </Route>
       </Routes>
     </>
   );

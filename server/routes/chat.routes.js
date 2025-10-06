@@ -7,7 +7,7 @@ import { validate } from "../middleware/validate.js";
 
 const router=express.Router()
 
-router.post("/message/:receiverId",sendMessageValidator,validate,sendMessage)
+router.post("/message/:receiverId",authUser,sendMessageValidator,validate,sendMessage)
 router.get("/connections",authUser,connectionValidator,validate,authUser,connection)
 router.get("/messages/:chatId",authUser,fetchMessagesValidator,validate,fetchMessages)
 router.delete("/message/:messageId",authUser,deleteMessageValidator,validate,deleteMessage)

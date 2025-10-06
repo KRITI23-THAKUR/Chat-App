@@ -6,8 +6,11 @@ import { User } from "../models/user.model.js";
 
 export const sendMessage = asyncHandler(async (req, res, next) => {
   const senderId = req.user._id;
+  console.log(senderId)
   const { message } = req.body;
   const { receiverId } = req.params;
+
+  
 
   let chat = await Chat.findById(receiverId);
   if (chat) {
@@ -19,6 +22,7 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     if (!userExist) {
       throw new ApiError(400, "user don't exist with whom you want to chat");
     }
+    
     chat = await Chat.findOne({
       users: {
         $all: [senderId, receiverId],
@@ -60,7 +64,6 @@ export const fetchMessages = asyncHandler(async (req, res, next) => {
     .skip(skip)
     .limit(limit + 1)
     .populate("sender", "name profilePicture")
-    .sort({ createdAt: -1 })
     .lean();
 
   const hasMorePage = messages.length > limit;

@@ -16,14 +16,14 @@ export default function useApi() {
           method: method,
           data: body,
         });
-console.log(response)
+        // console.log(response)
         if (response.data.success) {
           if (redirectUrl) {
             navigate(redirectUrl, { replace: true });
           }
           toast.success(response.data.message);
           return response.data;
-
+          
         }
       } catch (error) {
         console.log(error);
