@@ -21,7 +21,7 @@ export default function useApi() {
           if (redirectUrl) {
             navigate(redirectUrl, { replace: true });
           }
-          toast.success(response.data.message);
+          
           return response.data;
           
         }

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import ProfilePicture from "../profile/ProfilePicture";
 
 const ConnectionUserList = ({ users }) => {
   const { auth } = useContext(AuthContext);
@@ -7,16 +8,15 @@ const ConnectionUserList = ({ users }) => {
 
   return (
     <div className="flex items-center space-x-3">
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold">
-        {users.length === 1
-          ? users[0].name.charAt(0).toUpperCase()
-          : user?.name?.charAt(0).toUpperCase()}
-      </div>
+      <ProfilePicture
+        profilePicture={
+          users?.length === 1 ? users[0]?.profilePicture : user?.profilePicture
+        }
+      />
       <div className="flex flex-col">
         <span className="font-medium text-gray-100">
-          {users.length === 1 ? users[0].name : user?.name}
+          {users?.length === 1 ? users[0]?.name : user?.name}
         </span>
-        <span className="text-xs text-gray-400">Online</span>
       </div>
     </div>
   );

@@ -1,20 +1,20 @@
+import { useContext } from "react";
 import ChatBubble from "./ChatBubble";
+import { AuthContext } from "../../context/AuthContext";
 
 const ShowMessages = ({ messages }) => {
-  return (
-    <div className="">
-      {messages?.map((m) => {
-        return <ChatBubble key={m._id} message={m}/>
-      })}
+  const { auth } = useContext(AuthContext);
+  const userId = auth?.user?._id;             
 
-      {/* <div className="chat chat-start">
-        <div className="chat-header">
-          Obi-Wan Kenobi
-          <time className="text-xs opacity-50">2 hour ago</time>
-        </div>
-        <div className="chat-bubble chat-end chat">I loved you.</div>
-        <div className="chat-footer opacity-50">Delivered</div>
-      </div> */}
+  return (
+    <div className="flex flex-col gap-2 p-3 overflow-y-auto">
+      {messages?.map((m) => (
+        <ChatBubble
+          key={m._id}
+          message={m}
+          isOwn={m.sender._id === userId}
+        />
+      ))}
     </div>
   );
 };

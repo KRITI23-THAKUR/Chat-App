@@ -2,14 +2,14 @@ const SearchUserList = ({ users }) => {
   if (!users || users.length === 0) return null;
 
   return (
-    <ul className="mt-2 w-full bg-base-100 border border-base-300 rounded-2xl shadow-md max-h-100 overflow-y-auto">
+    <ul className="mt-7 w-full rounded-2xl bg-card-foreground text-background shadow-md h-full overflow-y-auto">
       {users.map((user) => (
         <li
           key={user._id}
-          className="flex items-center gap-3 p-3 hover:bg-base-200 cursor-pointer transition-all duration-150"
+          className="flex items-center gap-3 p-3 hover:bg-accent cursor-pointer transition-all duration-150"
         >
           {/* Avatar placeholder */}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-200 to-indigo-400 flex items-center justify-center text-white font-semibold">
             {user.name?.[0]?.toUpperCase()}
           </div>
 

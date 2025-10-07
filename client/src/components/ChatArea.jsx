@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import useApi from "../hooks/useApi";
 import ShowMessages from "./chat-components/ShowMessages";
+import { AuthContext } from "../context/AuthContext";
 
 const PAGE = 1;
 const LIMIT = 10;
 
 const ChatArea = () => {
+  const { auth } = useContext(AuthContext);
   const [messages, setMessages] = useState();
   const { request } = useApi();
   const { selectedChat } = useContext(ChatContext);
@@ -26,11 +28,21 @@ const ChatArea = () => {
   console.log(messages);
 
   return (
-    <div className="h-full bg-black  text-white w-full">
-      
-      <ShowMessages messages={messages}/>
+    <div className=" h-full w-full bg-background flex flex-col">
+    
+      <div className="text-primary/70 font-bold px-6 py text-3xl font-sans ">
+        {selectedChat?.users?.find((user) => user._id != auth?.user?._id)?.name}
+      </div>
+
+      <div className="p-2">
+        <h2 className="text-2xl font-bold"></h2>
+      </div>
+
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto p-4">
+        <ShowMessages messages={messages} />
+      </div>
     </div>
   );
 };
-
 export default ChatArea;

@@ -4,6 +4,7 @@ import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
 import { AuthContext } from "../context/AuthContext";
 import { setToken } from "../lib/localstorage";
 import { Link } from "react-router-dom";
+import { toast} from "sonner";
 
 const INITIAL_FORMDATA = {
   email: "",
@@ -31,6 +32,7 @@ const Login = () => {
       body: formdata,
       redirectUrl:"/"
     });
+    toast.success(response.message);
     setAuth({
      token: response.token,
      user: response.user

@@ -1,15 +1,17 @@
 import Connections from "./Connections";
 import SearchBar from "./search/SearchBar";
-
+import Profile from "./profile/Profile";
 const ChatList = () => {
   return (
-    <div className="h-full md:w-[30%] hidden md:flex flex-col bg-gray-900 border-r border-gray-800 p-4">
-      <div className="mb-4">
-        <h1 className="text-lg font-semibold text-white mb-3">Chats</h1>
+    <div className="h-full md:w-[35%] hidden md:flex flex-col bg-background text-foreground/90 px-2 py-4">
+      <div className="mb-3">
         <SearchBar />
       </div>
-      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+      <div className="flex-1 custom-scrollbar-hide overflow-y-auto">
         <Connections />
+      </div>
+      <div className=" bottom-1 mx-2 rounded p-2 ">
+        <Profile />
       </div>
     </div>
   );
