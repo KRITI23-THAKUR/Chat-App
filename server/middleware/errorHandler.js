@@ -7,7 +7,7 @@ class ApiError extends Error {
 }
 
 const errorHandler = (err, req, res, next) => {
-  console.error("Error:", err.message);
+  console.error("Error:", err);
 
   const statusCode = err.statusCode || 500;
 

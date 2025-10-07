@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique:true
+      unique: true,
     },
 
     fullname: {
@@ -16,18 +16,21 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      select:false
-
+      select: false,
     },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    profilePicture:{
-      type:String,
-      default:null
-    }
+    profilePicture: {
+      type: String,
+      default: null,
+    },
+    profilePicturePublicId: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
