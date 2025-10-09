@@ -6,16 +6,21 @@ import { Message } from "../models/messages.model.js";
 
 export const connection = asyncHandler(async (req, res, next) => {
   const userId = req.user._id;
-  
-  const chats = await Chat.find({
-    users: userId,
-  })
+
+  const chats = await Chat.find({ users: userId })
     .populate([
-      { path: "users", select: "name fullname profilePicture" },
+      {
+        path: "users",
+        match: { _id: { $ne: userId } },
+        select: "name fullname profilePicture",
+      },
       {
         path: "lastMessage",
         select: "message sender",
-        populate: { path: "sender", select: "name fullname profilePicture " },
+        populate: {
+          path: "sender",
+          select: "name fullname profilePicture",
+        },
       },
     ])
     .sort({ updatedAt: -1 });
@@ -25,8 +30,6 @@ export const connection = asyncHandler(async (req, res, next) => {
     connections: chats,
   });
 });
-
-
 
 export const deleteWholeChat = asyncHandler(async (req, res, next) => {
   const chatId = req.params.chatId;
@@ -41,11 +44,11 @@ export const deleteWholeChat = asyncHandler(async (req, res, next) => {
 
   await Promise.all([
     Chat.findByIdAndDelete(chatId),
-    Message.deleteMany({chat:chatId})
-  ])
+    Message.deleteMany({ chat: chatId }),
+  ]);
 
   res.status(200).json({
-    success:true,
-    message:"chat deleted successfully"
-  })
+    success: true,
+    message: "chat deleted successfully",
+  });
 });

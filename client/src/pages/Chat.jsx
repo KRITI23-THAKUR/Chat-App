@@ -1,17 +1,19 @@
 import ChatArea from "../components/ChatArea";
 import ChatList from "../components/ChatList";
-import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
-import { ChatContext } from "../context/ChatContext";
 import { useContext } from "react";
-
+import { ChatContext } from "../context/ChatContext";
+import NoConversationPlaceholder from "../components/NoConversationPlaceholder";
 const Chat = () => {
-  const data = useContext(ChatContext);
-  // console.log(data.selectedChat)
+  const { selectedChat } = useContext(ChatContext);
   return (
     <div className="h-screen w-full  ">
       <div className="flex w-full h-full items-center justify-center">
         <ChatList />
-        <ChatArea />
+        {selectedChat && Object.keys(selectedChat).length > 0 ? (
+          <ChatArea />
+        ) : (
+          <NoConversationPlaceholder />
+        )}
       </div>
     </div>
   );

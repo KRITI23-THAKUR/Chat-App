@@ -69,6 +69,7 @@ export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("token", { httpOnly: true });
 
   return res.status(200).json({
+    success:true,
     message: "logout successfully",
   });
 });

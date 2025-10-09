@@ -7,7 +7,6 @@ const Connections = () => {
   const { setSelectedChat } = useContext(ChatContext);
   const { request } = useApi();
   const [connections, setConnections] = useState([]);
-
   useEffect(() => {
     const fetchConnections = async () => {
       const response = await request({

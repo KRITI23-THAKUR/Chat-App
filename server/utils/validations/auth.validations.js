@@ -38,13 +38,3 @@ export const loginValidator = [
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters"),
 ];
-
-
-
-
-
- export const logoutValidator = [
-  body("token")
-    .notEmpty()
-    .withMessage("No active session found, already logged out"),
-];

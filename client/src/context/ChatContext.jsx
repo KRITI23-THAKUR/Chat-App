@@ -10,6 +10,14 @@ export const ChatContext = createContext({
 export const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState({});
   const [messages, setMessages] = useState([]);
-  const data = { selectedChat, setSelectedChat, messages, setMessages };
+
+  const otherUser = selectedChat?.users?.[0];
+  const data = {
+    selectedChat,
+    setSelectedChat,
+    messages,
+    setMessages,
+    otherUser,
+  };
   return <ChatContext.Provider value={data}>{children}</ChatContext.Provider>;
 };

@@ -3,7 +3,7 @@ import formatDateInWords from "../../utils/format-date";
 const ChatBubble = ({ message, isOwn }) => {
   return (
     <div className={`chat p-2 ${isOwn ? "chat-end" : "chat-start"}`}>
-      <div className="chat-header flex text-accent font-bold items-center gap-1">
+      <div className="chat-header flex text-accent font-bold items-center gap-2">
         {!isOwn && <span>{message.sender.name}</span>}
         <time className="text-xs text-accent opacity-50">
           {formatDateInWords(message.createdAt)}
@@ -11,7 +11,7 @@ const ChatBubble = ({ message, isOwn }) => {
       </div>
 
       <div
-        className={`chat-bubble ${
+        className={`chat chat-bubble ${
           isOwn
             ? "bg-card text-foreground"
             : "bg-card-foreground font-sans text-card"

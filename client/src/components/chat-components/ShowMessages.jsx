@@ -1,18 +1,29 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ChatBubble from "./ChatBubble";
 import { AuthContext } from "../../context/AuthContext";
-
-const ShowMessages = ({ messages }) => {
+import { useRef } from "react";
+const ShowMessages = ({ messages = {} }) => {
   const { auth } = useContext(AuthContext);
-  const userId = auth?.user?._id;             
+  const userId = auth?.user?._id;
+  const messagesArray = Object.values(messages);
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    containerRef.current?.scrollTo({
+      top: containerRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
+  console.log(messagesArray);
   return (
-    <div className="flex flex-col gap-2 p-3 overflow-y-auto">
-      {messages?.map((m) => (
+    <div ref={containerRef} className="flex flex-col gap-2 p-3 overflow-y-auto">
+      {messagesArray?.map((m) => (
         <ChatBubble
-          key={m._id}
+          key={m?._id}
           message={m}
-          isOwn={m.sender._id === userId}
+          isOwn={m?.sender?._id === userId}
         />
       ))}
     </div>

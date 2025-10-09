@@ -2,7 +2,7 @@ import { useState, createContext, useEffect } from "react";
 import { getToken, removeToken } from "../lib/localstorage";
 import useApi from "../hooks/useApi";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -35,15 +35,19 @@ export const AuthProvider = ({ children }) => {
     getCurrUser();
   }, [navigate]);
   const logout = async () => {
-    await request({
+    const response = await request({
       endPoint: "auth/logout",
     });
-    removeToken();
-    setAuth({
-      token: null,
-      user: null,
-    });
-    navigate("/login");
+    console.log(response)
+    toast.success(response?.message);
+    if (response.success) {
+      removeToken();
+      setAuth({
+        token: null,
+        user: null,
+      });
+      navigate("/login");
+    }
   };
   return (
     <AuthContext.Provider value={{ auth, setAuth, logout }}>
