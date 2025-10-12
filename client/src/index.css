@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 @plugin "daisyui";
    @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
@@ -49,23 +50,6 @@ body {
   }
 }
 
-/* :root {
-  --background: rgb(20, 16, 29);
-  --foreground: #fff;
-  --primary: oklch(0.7227 0.1920 149.5793);
-  --primary-foreground: oklch(1.0000 0 0);
-}
-.dark {
-  --background:rgb(15, 15, 23);
-  --foreground: #fff;
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-}
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-} */
-
 :root {
   --background: oklch(0.9461 0 0);
   --foreground: oklch(0.145 0 0);
@@ -97,9 +81,9 @@ body {
   --scrollbar-thumb-hover: #7a7a7a;
 }
 
+
 .dark {
-  /* --background: oklch(0.1461 0.0153 297.7133); */
-  --background: oklch(0.1484 0.0302 295.9748);
+  --background: #07070a;
 
   --foreground: oklch(0.89 0.0561 286.3186);
   --card: oklch(0.1864 0.0247 276.4498);
@@ -126,6 +110,9 @@ body {
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
+  /* --background: oklch(0.1461 0.0153 297.7133); */
+  
+
 
 @theme inline {
   --color-background: var(--background);

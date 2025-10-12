@@ -3,12 +3,19 @@ import { getToken, removeToken } from "../lib/localstorage";
 import useApi from "../hooks/useApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import useSocket from "../hooks/useSocket";
+import useShowOnlineUsers from "../hooks/useShowOnlineUsers";
 
 export const AuthContext = createContext();
+
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState({ token: getToken(), user: null });
   const { request } = useApi();
+
+  const { onlineUsers } = useSocket(auth?.user);
+  console.log(onlineUsers);
+  useShowOnlineUsers(onlineUsers, auth);
 
   const getCurrUser = async () => {
     if (!getToken()) {
@@ -38,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     const response = await request({
       endPoint: "auth/logout",
     });
-    console.log(response)
+    console.log(response);
     toast.success(response?.message);
     if (response.success) {
       removeToken();

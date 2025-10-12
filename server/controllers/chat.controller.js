@@ -11,7 +11,7 @@ export const connection = asyncHandler(async (req, res, next) => {
     .populate([
       {
         path: "users",
-        match: { _id: { $ne: userId } },
+        match: { _id: { $ne: userId } }, //exclude the login user
         select: "name fullname profilePicture",
       },
       {
@@ -51,4 +51,29 @@ export const deleteWholeChat = asyncHandler(async (req, res, next) => {
     success: true,
     message: "chat deleted successfully",
   });
+});
+
+export const getChat = asyncHandler(async (req, res, next) => {
+  const userId = req.user._id;
+  console.log(req.params)
+  const otherUserId = req.params.userId;
+  const chat = await Chat.findOne({
+    users: { $all: [userId, otherUserId] },
+  }).populate([
+    {
+      path: "users",
+      select: "name  profilePicture fullname",
+    },
+    {
+      path: "lastMessage",
+      populate: {
+        path: "sender",
+        select: "name profilePicture fullname",
+      },
+    },
+  ]);
+  res.status(200).json({
+    success:true,
+    chat
+  })
 });

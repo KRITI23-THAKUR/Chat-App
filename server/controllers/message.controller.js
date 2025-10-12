@@ -3,14 +3,12 @@ import { Chat } from "../models/chat.model.js";
 import { Message } from "../models/messages.model.js";
 import { ApiError } from "../middleware/errorHandler.js";
 import { User } from "../models/user.model.js";
+import { io, onlineUsers } from "../socket/socket.js";
 
 export const sendMessage = asyncHandler(async (req, res, next) => {
   const senderId = req.user._id;
-  console.log(senderId)
   const { message } = req.body;
   const { receiverId } = req.params;
-
-  
 
   let chat = await Chat.findById(receiverId);
   if (chat) {
@@ -19,20 +17,18 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     }
   } else {
     const userExist = await User.findById(receiverId);
-    if (!userExist) {
+    if (!userExist)
       throw new ApiError(400, "user don't exist with whom you want to chat");
-    }
-    
+
     chat = await Chat.findOne({
       users: {
         $all: [senderId, receiverId],
       },
     });
-    if (!chat) {
+    if (!chat)
       chat = await Chat.create({
         users: [senderId, receiverId],
       });
-    }
   }
 
   const newMessage = await Message.create({
@@ -41,15 +37,36 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
     message: message,
   });
 
-  await Chat.findByIdAndUpdate(chat._id, {
-    $set: { lastMessage: newMessage._id, updatedAt: Date.now() },
-  });
-
+  chat = await Chat.findByIdAndUpdate(
+    chat._id,
+    {
+      $set: { lastMessage: newMessage._id, updatedAt: Date.now() },
+    },
+    { new: true }
+  ).populate([
+    { path: "users", select: "name profilePicture email" },
+    {
+      path: "lastMessage",
+      populate: { path: "sender", select: "name profilePicture" },
+    },
+  ]);
   await newMessage.populate("sender", "name profilePicture");
+
+  // Real-time socket event
+  const otherUser = chat.users.find(
+    (user) => user._id.toString() !== senderId.toString()
+  );
+  const receiver = onlineUsers.get(String(otherUser._id));
+  const sender = onlineUsers.get(String(senderId));
+  if (receiver?.socketId)
+    io.to(receiver.socketId).emit("new-message", { newMessage, chat });
+  if (sender?.socketId)
+    io.to(sender.socketId).emit("new-message", { newMessage, chat });
 
   return res.status(201).json({
     success: true,
     content: newMessage,
+    chat,
   });
 });
 
@@ -61,6 +78,7 @@ export const fetchMessages = asyncHandler(async (req, res, next) => {
   const skip = (page - 1) * limit;
 
   const messages = await Message.find({ chat: chatId })
+  .sort({createdAt:-1})
     .skip(skip)
     .limit(limit + 1)
     .populate("sender", "name profilePicture")

@@ -1,7 +1,7 @@
 import express from "express";
 import { deleteMessage, fetchMessages, sendMessage } from "../controllers/message.controller.js";
 import { authUser } from "../middleware/authMiddleware.js";
-import { connection, deleteWholeChat } from "../controllers/chat.controller.js"
+import { connection, deleteWholeChat,getChat } from "../controllers/chat.controller.js"
 import { connectionValidator, deleteMessageValidator, fetchMessagesValidator, sendMessageValidator } from "../utils/validations/chat.validation.js";
 import { validate } from "../middleware/validate.js";
 
@@ -12,5 +12,7 @@ router.get("/connections",authUser,connectionValidator,validate,authUser,connect
 router.get("/messages/:chatId",authUser,fetchMessagesValidator,validate,fetchMessages)
 router.delete("/message/:messageId",authUser,deleteMessageValidator,validate,deleteMessage)
 router.delete("/:chatId",authUser,deleteMessageValidator,validate,deleteWholeChat)
+router.get("/:userId",authUser,getChat)
+
 
 export default router  

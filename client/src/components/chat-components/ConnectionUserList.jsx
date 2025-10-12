@@ -14,7 +14,7 @@ const ConnectionUserList = ({ users }) => {
         }
       />
       <div className="flex flex-col">
-        <span className="font-medium text-gray-100">
+        <span className="font-medium text-foreground">
           {users?.length === 1 ? users[0]?.name : user?.name}
         </span>
       </div>

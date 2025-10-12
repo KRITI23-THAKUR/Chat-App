@@ -39,10 +39,14 @@ const SignUp = () => {
 
   return (
     <>
+      
       <div className="w-full flex items-center justify-center p-4 bg-slate-900 min-h-screen">
         <div className="relative w-full max-w-6xl md:h-[550px] h-[650px] flex flex-col items-center justify-center">
           <BorderAnimatedContainer>
-            <div className="flex items-center w-full h-full">
+            <div className="flex items-center w-full h-full justify-center">
+              <div className=" w-full p-20 rounded-3xl ">
+                <img className="h-full w-full" src="images/signUp.jpg" alt ="SignUp"/>
+              </div>
               <form
                 className="flex flex-col space-y-4 p-6 items-center justify-center h-full w-full"
                 onSubmit={submitHandler}
@@ -75,16 +79,17 @@ const SignUp = () => {
                   {loading ? "SigningUp..." : "SignUp"}
                 </button>
                 <p className="text-center text-gray-600 mt-4">
-          Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="mt-2 text-teal-700 underline font-bold"
-                >
-                 Login
-                </Link>
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="mt-2 text-teal-700 underline font-bold"
+                  >
+                    Login
+                  </Link>
                 </p>
               </form>
-            </div> {/* ✅ added missing closing div here */}
+            </div>{" "}
+            {/* ✅ added missing closing div here */}
           </BorderAnimatedContainer>
         </div>
       </div>
