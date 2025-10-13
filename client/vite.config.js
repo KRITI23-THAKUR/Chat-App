@@ -12,9 +12,13 @@ export default defineConfig({
       registerType: "autoUpdate",
       injectRegister: false,
 
+      // ✅ PWA Assets generation setup
       pwaAssets: {
         disabled: false,
-        config: true,
+        config: {
+          preset: "minimal",
+          image: "public/icon.png", // make sure this file exists
+        },
       },
 
       manifest: {
