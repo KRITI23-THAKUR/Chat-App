@@ -21,16 +21,16 @@ export default function useApi() {
           if (redirectUrl) {
             navigate(redirectUrl, { replace: true });
           }
-          
+
           return response.data;
-          
         }
       } catch (error) {
         console.log(error);
-        toast.error(
+        const message =
           error?.response?.data?.message ||
-            error?.response?.data?.errors[0]?.message
-        );
+          error?.response?.data?.errors?.[0]?.message ||
+          "Something went wrong";
+        toast.error(message);
       } finally {
         setLoading(false);
       }

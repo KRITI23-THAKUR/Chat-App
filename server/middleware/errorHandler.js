@@ -5,7 +5,6 @@ class ApiError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-
 const errorHandler = (err, req, res, next) => {
   console.error("Error:", err);
 

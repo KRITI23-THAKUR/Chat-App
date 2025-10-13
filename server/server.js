@@ -7,11 +7,10 @@ import http from "http";
 import { initSocket } from "./socket/socket.js";
 
 const server = http.createServer(app);
-initSocket(server);
-
 connectdb();
+initSocket(server);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
-  console.log(`server is running on ${PORT}`);
+  console.log(`⚙ Server running on PORT ${PORT}.`);
 });
