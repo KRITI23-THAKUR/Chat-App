@@ -15,7 +15,7 @@ export const ChatContext = createContext({
 });
 
 const PAGE = 1;
-const LIMIT = 50;
+const LIMIT =  1000;
 
 export const ChatProvider = ({ children }) => {
   const [connections, setConnections] = useState([]);

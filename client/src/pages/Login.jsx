@@ -47,7 +47,7 @@ const Login = () => {
       <div className=" flex items-center justify-center  bg-slate-900 min-h-screen">
         <div className="relative w-full max-w-6xl md:h-[550px] h-[650px]  flex flex-col items-center justify-center">
         <BorderAnimatedContainer >
-          <div className="flex  items-center w-full h-full">
+          <div className="flex items-center w-full h-full">
 
         <form
           className="flex flex-col space-y-4 p-6 items-center justify-center h-full w-full"
@@ -82,7 +82,7 @@ const Login = () => {
           <Link to="/signup" className="mt-2 text-teal-700 underline font-bold"> SignUp</Link>
           </p>
         </form>
-        <div className=" flex h-full items-center  pr-20">
+        <div className=" flex flex-col h-full md:items-center justify-center items-center  pr-20">
           <img src="images/loginn.svg" alt="Login bg" className=""/>
         </div>
         </div>

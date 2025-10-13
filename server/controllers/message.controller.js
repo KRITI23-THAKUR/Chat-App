@@ -78,7 +78,6 @@ export const fetchMessages = asyncHandler(async (req, res, next) => {
   const skip = (page - 1) * limit;
 
   const messages = await Message.find({ chat: chatId })
-  .sort({createdAt:-1})
     .skip(skip)
     .limit(limit + 1)
     .populate("sender", "name profilePicture")

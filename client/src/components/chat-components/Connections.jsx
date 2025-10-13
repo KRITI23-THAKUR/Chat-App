@@ -35,7 +35,7 @@ const Connections = () => {
 
   return (
     <>
-      <div className="w-full max-h-[90vh]  max-w-md mx-auto text-white rounded shadow-lg px-2 py-2 space-y-2">
+      <div className="w-full max-h-[90vh] mx-auto text-white rounded px-2 py-2 space-y-2">
         {connections.length === 0 ? (
           <p className="text-card-foreground px-4 text-sm py-6">
             No connections yet
